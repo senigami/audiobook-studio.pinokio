@@ -1,51 +1,56 @@
 # Audiobook Studio for Pinokio
 
-A Pinokio launcher for [Audiobook Studio](https://github.com/senigami/audiobook-studio), a local-first audiobook production app for voice cloning, chapter generation, narration workflows, and finished audiobook export.
+A Pinokio launcher for [Audiobook Studio](https://github.com/senigami/audiobook-studio), a local-first web studio for turning long-form text into finished audiobooks with cloned voices, chapter-based production, and final export tools.
 
-This repository is the Pinokio wrapper only. The main project lives here:
+Showcase:
+
+https://senigami.github.io/audiobook-studio/
+
+Main project:
 
 https://github.com/senigami/audiobook-studio
 
-## What This Launcher Does
+## Why Audiobook Studio
 
-This Pinokio app will:
+Audiobook Studio is built for people who want more control over audiobook production:
+
+- create audiobooks locally instead of relying on a hosted generation workflow
+- clone and reuse narrator voices
+- work chapter by chapter instead of in one giant monolithic run
+- revise text, regenerate only what changed, and keep iterating
+- export finished audiobook files from a self-hosted web interface
+
+It is designed to make long-form narration workflows more practical, more private, and easier to own end to end.
+
+## What This Pinokio Launcher Does
+
+This repository is the Pinokio wrapper, not the full application source.
+
+It will:
 
 - clone the main Audiobook Studio repository
-- run the project’s install/setup flow
-- start the local web application
+- run the project’s setup/install flow
+- start the local web app
 - expose the local URL through Pinokio
 - update the install later with a pull + setup pass
 - optionally install demo content on first run
 
-## Why Use Pinokio
+## Main Features
 
-This launcher is meant to make first-time setup much easier for people who want to try Audiobook Studio without manually walking through the full install process.
+Audiobook Studio includes:
 
-It is especially useful for users who want:
-
-- a more guided install flow
-- a local web UI they can launch from one place
-- a demo library to explore immediately
-- a cleaner path to trying Audiobook Studio for the first time
-
-## Main Features of Audiobook Studio
-
-Audiobook Studio is designed for local-first audiobook production and revision.
-
-Core capabilities include:
-
-- voice cloning and reusable narrator profiles
+- local voice cloning and reusable narrator profiles
 - chapter-based generation workflows
+- performance and rebuild tools for fixing only the pieces that need work
 - multi-voice narration and dialogue assignment
-- chapter performance and rebuild tools
 - audiobook assembly and export
-- local ownership of projects, voices, and output files
+- local ownership of project files, voice assets, and generated output
 
 ## Demo Content
 
 On a fresh install, Audiobook Studio can install demo content automatically so new users have something real to explore right away.
 
-The demo library is intended to help users quickly test:
+The demo library is useful for quickly testing:
 
 - voice playback
 - chapter generation
@@ -63,12 +68,7 @@ Those scripts handle dependency setup and app startup for the main project.
 
 ## Notes
 
-- This repository does not contain the full Audiobook Studio source code.
-- It is a launcher layer for Pinokio.
-- If you want to contribute to the application itself, use the main repo:
+- This repository is the Pinokio launcher layer only.
+- The main source code lives in the Audiobook Studio repo:
   - [https://github.com/senigami/audiobook-studio](https://github.com/senigami/audiobook-studio)
-
-## Links
-
-- Main project: [senigami/audiobook-studio](https://github.com/senigami/audiobook-studio)
-- Pinokio: [https://pinokio.co](https://pinokio.co)
+- If you want the full project details, docs, and release history, use the main repo and showcase link above.

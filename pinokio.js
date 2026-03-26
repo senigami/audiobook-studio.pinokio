@@ -3,7 +3,7 @@ const isWindows = process.platform === "win32"
 module.exports = {
   version: "3.7",
   title: "Audiobook Studio",
-  description: "Local-first audiobook production with voice cloning, chapter generation, demo content, and export workflows.",
+  description: "Create full audiobooks locally with voice cloning, chapter-based production, and export tools, all from a simple self-hosted web studio. Learn more at the showcase: https://senigami.github.io/audiobook-studio/",
   icon: "icon.png",
   menu: async (kernel, info) => {
     const installed = info.exists("app/.git")
