@@ -3,8 +3,8 @@ const startCommand = isWindows
   ? 'powershell -ExecutionPolicy Bypass -File .\\run.ps1 -NoReload'
   : 'bash ./run.sh --no-reload'
 const settleCommand = isWindows
-  ? 'powershell -Command "Start-Sleep -Seconds 2"'
-  : 'sleep 2'
+  ? 'powershell -Command "Start-Sleep -Seconds 5"'
+  : 'sleep 5'
 
 module.exports = {
   requires: {
