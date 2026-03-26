@@ -2,6 +2,9 @@ const isWindows = process.platform === "win32"
 const startCommand = isWindows
   ? 'powershell -ExecutionPolicy Bypass -File .\\run.ps1 -NoReload'
   : 'bash ./run.sh --no-reload'
+const settleCommand = isWindows
+  ? 'powershell -Command "Start-Sleep -Seconds 2"'
+  : 'sleep 2'
 
 module.exports = {
   requires: {
@@ -33,6 +36,18 @@ module.exports = {
       method: "local.set",
       params: {
         url: "http://127.0.0.1:{{input.event[1]}}",
+      },
+    },
+    {
+      method: "shell.run",
+      params: {
+        message: [settleCommand],
+      },
+    },
+    {
+      method: "process.wait",
+      params: {
+        uri: "{{local.url}}/api/home",
       },
     },
     {
