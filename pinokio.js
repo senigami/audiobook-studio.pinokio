@@ -4,6 +4,7 @@ module.exports = {
   version: "3.7",
   title: "Audiobook Studio",
   description: "Local-first audiobook production with voice cloning, chapter generation, demo content, and export workflows.",
+  icon: "icon.png",
   menu: async (kernel, info) => {
     const installed = info.exists("app/.git")
     const running = {

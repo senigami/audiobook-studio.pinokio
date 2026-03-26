@@ -13,6 +13,9 @@ module.exports = {
       method: "shell.run",
       params: {
         path: "app",
+        env: {
+          AUDIOBOOK_STUDIO_INSTALL_DEMO: "1",
+        },
         message: [startCommand],
         on: [
           {
