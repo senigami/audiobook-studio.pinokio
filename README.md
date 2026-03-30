@@ -66,6 +66,12 @@ The launcher uses Audiobook Studio’s own startup scripts:
 
 Those scripts handle dependency setup and app startup for the main project.
 
+## Windows Support Note
+
+`1.8.3` is the first Audiobook Studio release line that works correctly on Windows through this Pinokio launcher.
+
+Earlier versions could still hit Windows-specific startup, XTTS environment, and launcher issues. If you want a Windows install that matches the current launcher flow, start with `1.8.3` or newer.
+
 ## Notes
 
 - This repository is the Pinokio launcher layer only.
