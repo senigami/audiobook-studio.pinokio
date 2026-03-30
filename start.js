@@ -5,6 +5,9 @@ const startCommand = isWindows
 const settleCommand = isWindows
   ? 'powershell -Command "Start-Sleep -Seconds 5"'
   : 'sleep 5'
+const validateLauncherCommand = isWindows
+  ? "powershell -ExecutionPolicy Bypass -Command \"if (-not (Test-Path '.\\\\run.ps1')) { throw 'Audiobook Studio is not installed correctly: app\\\\run.ps1 was not found. Run Install or Reset first.' }\""
+  : "test -f ./run.sh || { echo 'Audiobook Studio is not installed correctly: app/run.sh was not found. Run Install or Reset first.'; exit 1; }"
 
 module.exports = {
   requires: {
@@ -19,7 +22,10 @@ module.exports = {
         env: {
           AUDIOBOOK_STUDIO_INSTALL_DEMO: "1",
         },
-        message: [startCommand],
+        message: [
+          validateLauncherCommand,
+          startCommand,
+        ],
         on: [
           {
             event: "/http:\\/\\/127\\.0\\.0\\.1:(\\d+)/",
