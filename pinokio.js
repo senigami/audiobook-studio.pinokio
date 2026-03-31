@@ -22,7 +22,7 @@ module.exports = {
       const local = info.local("start.js")
       if (local && local.url) {
         return [
-          { icon: "fa-solid fa-rocket", text: "Open Audiobook Studio", href: local.url },
+          { default:true, icon: "fa-solid fa-rocket", text: "Audiobook Studio", href: local.url },
           { icon: "fa-solid fa-terminal", text: "Terminal", href: "start.js" },
         ]
       }
