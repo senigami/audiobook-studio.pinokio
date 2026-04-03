@@ -1,10 +1,6 @@
 const isWindows = process.platform === "win32"
-const startCommand = isWindows
-  ? 'powershell -ExecutionPolicy Bypass -File "{{path.resolve(\'app/run.ps1\')}}" -NoReload'
-  : 'bash ./run.sh --no-reload'
-const validateLauncherCommand = isWindows
-  ? "powershell -ExecutionPolicy Bypass -Command \"if (-not (Test-Path '{{path.resolve('app/run.ps1')}}')) { throw 'Audiobook Studio is not installed correctly: app\\\\run.ps1 was not found. Run Install or Reset first.' }\""
-  : "test -f ./run.sh || { echo 'Audiobook Studio is not installed correctly: app/run.sh was not found. Run Install or Reset first.'; exit 1; }"
+const startCommandWindows = `powershell -NoProfile -NoLogo -ExecutionPolicy Bypass -Command "if (-not (Test-Path '.\\app\\run.ps1')) { throw 'Audiobook Studio is not installed correctly: app\\run.ps1 was not found. Run Install or Reset first.' }; & '.\\app\\run.ps1' -NoReload"`
+const startCommandLinux = `test -f ./app/run.sh || { echo 'Audiobook Studio is not installed correctly: app/run.sh was not found. Run Install or Reset first.'; exit 1; }; bash ./app/run.sh --no-reload`
 const uvicornReadyPattern = "/Uvicorn running on (http:\\/\\/[0-9.:]+)/"
 
 module.exports = {
@@ -16,22 +12,11 @@ module.exports = {
     {
       method: "shell.run",
       params: {
-        path: isWindows ? "." : "app",
-        venv: isWindows ? "app/venv" : undefined,
+        path: ".",
         env: {
           AUDIOBOOK_STUDIO_INSTALL_DEMO: "1",
         },
-        message: [
-          ...(isWindows
-            ? [
-                "powershell -ExecutionPolicy Bypass -Command \"if ((Test-Path '.\\\\app\\\\venv\\\\Scripts\\\\python.exe') -and -not (Test-Path '.\\\\app\\\\venv\\\\Scripts\\\\pip.exe')) { Remove-Item -Recurse -Force '.\\\\app\\\\venv' }\"",
-                "python -m ensurepip --upgrade",
-                "python -m pip --version",
-              ]
-            : []),
-          validateLauncherCommand,
-          startCommand,
-        ],
+        message: [isWindows ? startCommandWindows : startCommandLinux],
         on: [
           {
             event: uvicornReadyPattern,
