@@ -1,11 +1,11 @@
 const isWindows = process.platform === "win32"
 const startCommand = isWindows
-  ? 'powershell -ExecutionPolicy Bypass -File .\\run.ps1 -NoReload'
+  ? 'powershell -ExecutionPolicy Bypass -File .\\app\\run.ps1 -NoReload'
   : 'bash ./run.sh --no-reload'
 const validateLauncherCommand = isWindows
-  ? "powershell -ExecutionPolicy Bypass -Command \"if (-not (Test-Path '.\\\\run.ps1')) { throw 'Audiobook Studio is not installed correctly: app\\\\run.ps1 was not found. Run Install or Reset first.' }\""
+  ? "powershell -ExecutionPolicy Bypass -Command \"if (-not (Test-Path '.\\\\app\\\\run.ps1')) { throw 'Audiobook Studio is not installed correctly: app\\\\run.ps1 was not found. Run Install or Reset first.' }\""
   : "test -f ./run.sh || { echo 'Audiobook Studio is not installed correctly: app/run.sh was not found. Run Install or Reset first.'; exit 1; }"
-const uvicornReadyPattern = "/Uvicorn running on http:\\/\\/127\\.0\\.0\\.1:(\\d+)/"
+const uvicornReadyPattern = "/Uvicorn running on (http:\\/\\/[0-9.:]+)/"
 
 module.exports = {
   requires: {
@@ -16,11 +16,19 @@ module.exports = {
     {
       method: "shell.run",
       params: {
-        path: "app",
+        path: isWindows ? "." : "app",
+        venv: isWindows ? "app/venv" : undefined,
         env: {
           AUDIOBOOK_STUDIO_INSTALL_DEMO: "1",
         },
         message: [
+          ...(isWindows
+            ? [
+                "powershell -ExecutionPolicy Bypass -Command \"if ((Test-Path '.\\\\app\\\\venv\\\\Scripts\\\\python.exe') -and -not (Test-Path '.\\\\app\\\\venv\\\\Scripts\\\\pip.exe')) { Remove-Item -Recurse -Force '.\\\\app\\\\venv' }\"",
+                "python -m ensurepip --upgrade",
+                "python -m pip --version",
+              ]
+            : []),
           validateLauncherCommand,
           startCommand,
         ],
@@ -35,25 +43,19 @@ module.exports = {
     {
       method: "local.set",
       params: {
-        port: "{{input.event[1]}}",
-      },
-    },
-    {
-      method: "local.set",
-      params: {
-        url: "http://127.0.0.1:{{local.port}}",
+        url: "{{input.event[1]}}",
       },
     },
     {
       method: "process.wait",
       params: {
-        uri: "http://127.0.0.1:{{local.port}}/api/home",
+        uri: "{{local.url}}/api/home",
       },
     },
     {
       method: "process.wait",
       params: {
-        uri: "http://127.0.0.1:{{local.port}}",
+        uri: "{{local.url}}",
       },
     },
   ],
