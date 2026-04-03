@@ -5,8 +5,8 @@ const installCommands = isWindows
       "powershell -ExecutionPolicy Bypass -Command \"if ((Test-Path '.\\\\app\\\\venv\\\\Scripts\\\\python.exe') -and -not (Test-Path '.\\\\app\\\\venv\\\\Scripts\\\\pip.exe')) { Remove-Item -Recurse -Force '.\\\\app\\\\venv' }\"",
       "python -m ensurepip --upgrade",
       "python -m pip --version",
-      "powershell -ExecutionPolicy Bypass -Command \"if (-not (Test-Path '.\\\\app\\\\run.ps1')) { throw 'Audiobook Studio install is incomplete: app\\\\run.ps1 was not found. Try Reset, then Install again.' }\"",
-      "powershell -ExecutionPolicy Bypass -File .\\app\\run.ps1 -SetupOnly",
+      "powershell -ExecutionPolicy Bypass -Command \"if (-not (Test-Path '{{path.resolve('app/run.ps1')}}')) { throw 'Audiobook Studio install is incomplete: app\\\\run.ps1 was not found. Try Reset, then Install again.' }\"",
+      "powershell -ExecutionPolicy Bypass -File \"{{path.resolve('app/run.ps1')}}\" -SetupOnly",
     ]
   : [
       "if [ -d app/.git ]; then echo 'Audiobook Studio already cloned'; else git clone https://github.com/senigami/audiobook-studio.git app; fi",
