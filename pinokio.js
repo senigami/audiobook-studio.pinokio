@@ -3,7 +3,7 @@ const isWindows = process.platform === "win32"
 module.exports = {
   version: "3.7",
   title: "Audiobook Studio",
-  description: "Local-first audiobook production with cloned voices, chapter-based editing, segment regeneration, narrator + character casting, and final export in one web app.\n\nXTTS runs fully local by default. Voxtral is available as an optional cloud voice path with your own Mistral API key if you want another engine for specific voices. Voice profiles can use different engines in the same project, so you can mix narrator and character workflows without leaving Audiobook Studio.\n\nBuilt for iterative production: preview voices, regenerate only changed sections, queue chapter or segment work, and assemble the finished audiobook when everything is ready. Note: enabling Voxtral sends synthesis text and selected reference audio to Mistral.\n\nLearn more: https://senigami.github.io/audiobook-studio/",
+  description: "Local-first AI audiobook production with voice cloning and chapter repair tools. This is the easiest way to install locally, including an optional demo voice library so you can start exploring right away. Live demo: senigami.github.io/audiobook-studio",
   icon: "icon.png",
   menu: async (kernel, info) => {
     const installed = info.exists("app/.git")
